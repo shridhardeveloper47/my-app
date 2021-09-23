@@ -23,7 +23,7 @@
 }
 
 .App-link {
-  color: rgb(112, 76, 182);
+  color: rgba(112, 76, 182, 0.8);
 }
 
 @keyframes App-logo-float {
