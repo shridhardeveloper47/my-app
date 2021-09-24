@@ -3,10 +3,10 @@ name: Release Build & Deploy
 on:
   push:
     branches:
-      - staging
+      - release
   pull_request:
     branches:
-      - staging
+      - release
 
 jobs:
   build:
