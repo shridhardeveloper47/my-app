@@ -53,7 +53,7 @@ jobs:
         
     - name: Display structure of downloaded files
       run: ls -R
-      working-directory: ./build
+      working-directory: ./public/**
 
     - name: Deploy to gh-pages
       uses: peaceiris/actions-gh-pages@v3
