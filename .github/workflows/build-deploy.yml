@@ -73,6 +73,10 @@ jobs:
     if: github.ref == 'refs/heads/develop'
     environment: 'develop'
     needs: build
+
+    strategy:
+      matrix:
+        portal: ['tp', 'rp', 'rh']
     
     steps:
     - if: matrix.portal == 'rh' 
