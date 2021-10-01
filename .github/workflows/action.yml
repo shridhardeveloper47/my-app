@@ -1,0 +1,46 @@
+name: 'Get Environment'
+description: 'Get Environment'
+inputs:
+  portal:  # id of input
+    description: 'Portal Prefix'
+    required: true
+    default: 'rp'
+outputs:
+  command:
+    description: "Build Commond"
+    value: ${{ steps.output-portal.outputs.deploy }}
+  path:
+    description: "Build Path"
+    value: ${{ steps.output-portal.outputs.path }}
+  bucket:
+    description: "AWS Bucket"
+    value: ${{ steps.output-portal.outputs.bucket }}  
+runs:
+  using: "composite"
+  steps:  
+    - name: Sets env vars for RP
+      run: |
+          echo "PORTAL_DEPLOY=deployrp" >> $GITHUB_ENV
+          echo "PORTAL_PATH=apps/ResidentPortal/public/" >> $GITHUB_ENV
+          echo "PORTAL_BUCKET=s3://entrata-rp-ui/testing/rp" >> $GITHUB_ENV
+      if: inputs.portal == 'rp'
+
+    - name: Sets env vars for TP
+      run: |
+          echo "PORTAL_DEPLOY=deploytp" >> $GITHUB_ENV
+          echo "PORTAL_PATH=apps/TenantPortal/public/" >> $GITHUB_ENV
+          echo "PORTAL_BUCKET=s3://entrata-rp-ui/testing/tp" >> $GITHUB_ENV
+      if: inputs.portal == 'tp'
+
+    - name: Sets env vars for RH
+      run: |
+          echo "PORTAL_DEPLOY=deployrh" >> $GITHUB_ENV
+          echo "PORTAL_PATH=apps/ReservationHub/public/" >> $GITHUB_ENV
+          echo "PORTAL_BUCKET=s3://entrata-rp-ui/testing/rh" >> $GITHUB_ENV
+      if: inputs.portal == 'rh'
+   
+    - id: output-portal
+      run: echo "::set-output name=deploy::$(echo $PORTAL_DEPLOY)"
+      run: echo "::set-output name=path::$(echo $PORTAL_PATH)"
+      run: echo "::set-output name=bucket::$(echo $PORTAL_BUCKET)"
+      shell: bash
